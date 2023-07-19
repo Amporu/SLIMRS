@@ -2,16 +2,9 @@
 Simulation Library for Intelligent Multi-Robot Systems
 
 
-## MacOS Installation
-```zsh
-brew install sdl2
-brew install sdl2_image
+## Instalation
+```sh
+python3 -m pip install pygame pyOpenGL opencv-python
 ```
-## Linux Installation
-```bash
-sudo apt-get install libsdl2-dev libsdl2-image-dev
-```
-
-## Windows Installation
 
 TODO Adding binary files
