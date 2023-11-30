@@ -1,7 +1,7 @@
 
 
 from taisim2.simulator import Simulator,Robot,InputHandler
-from taisim2.virtual_Sensors import Camera,GPS,COMPASS
+from taisim2.sensors import Camera,GPS,COMPASS
 
 import cv2
 # Window dimensions

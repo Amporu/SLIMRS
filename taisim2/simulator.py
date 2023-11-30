@@ -1,5 +1,5 @@
 import pygame
-from taisim2.input_handler import InputHandler
+from taisim2.input_handler import InputHandler,
 from pygame import image
 from OpenGL.GL import *
 from OpenGL.GLUT import *
@@ -9,7 +9,7 @@ import cv2
 import numpy as np
 import math
 from taisim2.robot import Robot,Sensors
-from taisim2.utils import rgb_to_ansi_escape, rgb_to_ansi_background
+from taisim2.utils import rgb_to_ansi_escape, rgb_to_ansi_background,LEVEL1,LEVEL2,LEVEL3,LEVEL4,LEVEL5,LEVEL6,LEVEL7
 WINDOW_WIDTH = 1000
 WINDOW_HEIGHT = 600
 # Texture variables
@@ -105,7 +105,7 @@ class Simulator:
             InputHandler.car_y=Robot.y[InputHandler.selected]
             InputHandler.car_rotation=Robot.rotation[InputHandler.selected]
             color=rgb_to_ansi_background(Robot.r[InputHandler.selected],Robot.g[InputHandler.selected],Robot.b[InputHandler.selected])
-            print(f"\033[0m<{color}{Robot.name[InputHandler.selected]}\033[0m> SELECTED for remote controll")
+            print(f"\033[0m<{color}{Robot.name[InputHandler.selected]}\033[0m> SELECTED for remote control")
         gluLookAt(
             camera_distance * math.cos(InputHandler.camera_rotation), -camera_distance * math.sin(InputHandler.camera_rotation), 3.0 * InputHandler.camera_zoom,
             InputHandler.car_x, InputHandler.car_y, 0.0,
