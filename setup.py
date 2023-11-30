@@ -23,7 +23,7 @@ install_requires = [
 
 
 setup(name='taisim2',
-    version='0.1.1',
+    version='0.1.2',
     description="Simulation Library for Multi-Robot Systems(this one works",
     long_description="Simulation Library for Multi-Robot Systems",
     keywords='Simulator computer vision Advanced Driving',

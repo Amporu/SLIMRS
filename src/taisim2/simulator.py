@@ -22,6 +22,7 @@ GROUND_SIZE = 10
 CAR_SIZE = 0.2
 
 class Simulator:
+    
     render_id=0
     init=False
     pygame.init()
@@ -61,7 +62,7 @@ class Simulator:
                                 print(f"\033[33m        |   \u251C--------\033[0m<{sensor_color}%s\033[0m> \033[92m%s\033[0m"%(Robot.robot_sensors[i][1],Robot.robot_sensors[i][2]))
                                 
                 color=rgb_to_ansi_background(Robot.r[InputHandler.selected],Robot.g[InputHandler.selected],Robot.b[InputHandler.selected])
-                print(f"\033[0m<{color}{Robot.name[InputHandler.selected]}\033[0m> SELECtED for Remote Controll")
+                print(f"\033[0m<{color}{Robot.name[InputHandler.selected]}\033[0m> SELECTED for remote control")
         for event in pygame.event.get():
             InputHandler.handle_mouse(event)     
             #button.handle_event(event)
