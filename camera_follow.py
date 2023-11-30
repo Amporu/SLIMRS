@@ -1,6 +1,6 @@
 
 
-from taisim2.simulator import Simulator,Robot,InputHandler
+from taisim2.simulator import Simulator,Robot,InputHandler,LEVEL1
 from taisim2.sensors import Camera,GPS,COMPASS
 
 import cv2
@@ -26,9 +26,9 @@ def main():
     #initialize compass
     compass1=COMPASS(drone,"compass")
     compass1=COMPASS(tank1,"imu")
-
+    
     #Set the track
-    Simulator.track('taisim2/taisim.png')
+    Simulator.track(LEVEL1)
     
     
     while Simulator.isRunning():#check if the simulator is still running

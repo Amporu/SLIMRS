@@ -1,6 +1,6 @@
 import os
 from taisim2.logging_system import logger
-VERSION='0.0.1'
+VERSION='0.1'
 logger.info(f"VERSION : \033[92m{VERSION}\033[0m",)
 
 LEVEL1 = os.path.join(os.path.dirname(__file__), 'data/LineFollower1.png')

@@ -23,8 +23,8 @@ install_requires = [
 
 
 setup(name='taisim2',
-    version='0.0.1',
-    description="Simulation Library for Multi-Robot Systems",
+    version='0.1.1',
+    description="Simulation Library for Multi-Robot Systems(this one works",
     long_description="Simulation Library for Multi-Robot Systems",
     keywords='Simulator computer vision Advanced Driving',
     author='Tucudean Adrian-Ionut',
@@ -33,7 +33,7 @@ setup(name='taisim2',
     license='MIT',
     packages=find_packages('src','src/taisim2/data'),
     package_dir = {'': 'src'},include_package_data=True,
-    package_data={'taisim':['data/*.png',"*.py"]},
+    package_data={'taisim2':['data/*.png',"*.py"]},
     zip_safe=False,
     install_requires=['opencv-python','pygame','pyOpenGL'],
     classifiers=[

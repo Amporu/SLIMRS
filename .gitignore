@@ -1,0 +1,10 @@
+__pycache__/*
+build/*
+dist/*
+build/lib/tucu/__init__.py
+build/lib/tucu/sparkverse.py
+
+sparkverse/simulator.py
+sparkverse/sparkverse.py
+src/taisim2.egg-info/*
+src.__pycache__/

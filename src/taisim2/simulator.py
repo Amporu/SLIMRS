@@ -1,5 +1,5 @@
 import pygame
-from taisim2.input_handler import InputHandler,
+from taisim2.input_handler import InputHandler
 from pygame import image
 from OpenGL.GL import *
 from OpenGL.GLUT import *
