@@ -26,8 +26,8 @@ TAISIM is a Python-based simulator designed for testing and developing computer 
 ## Latest Release
 
 <p align="center">
-    
-[![Downloads](https://static.pepy.tech/badge/taisim)](https://pepy.tech/project/taisim2)
+
+[![Downloads](https://static.pepy.tech/badge/taisim2)](https://pepy.tech/project/taisim2)
 <a href="https://github.com/Amporu/Taisim/releases">
     <img src="https://img.shields.io/badge/-0.1.0-important">
  
@@ -38,23 +38,10 @@ TAISIM is a Python-based simulator designed for testing and developing computer 
 ## Dependencies
   * OpenCV
   * Pygame
-
+  * PyOpenGL
+  * NumPy
 ## Key Features
 
-### Virtual Sensors and Map Interface: 
-  Tucu provides a simple interface to camera and map data, allowing you to easily integrate it with your computer vision algorithms.
-  * Virtual Cameras
-  * Virtual Lidars
-  * Virtual Ultrasonic sensors
-  * Virtual Infrared sensors
-### Custom Map Imports: 
-In addition to default maps, SparkVerse allows for the import of custom maps. This flexibility facilitates testing across diverse environments and scenarios.
-```python
-Simulator.track("path_to_your_image.png")
-```
-### Optimized & CrossPlatform: 
-Efficient performance on single-core computers makes mir4u accessible to a wide range of users and potentially suitable for real-time applications or embedded systems.
-Soo far was tested on:
 
 [![Linux](https://img.shields.io/badge/linux-black?style=for-the-badge&logo=Linux)](https://github.com/Amporu)
     
@@ -62,49 +49,129 @@ Soo far was tested on:
     
 [![MacOS](https://img.shields.io/badge/MacOS-black?style=for-the-badge&logo=MacOS)](https://github.com/Amporu)
 
-## Installation
-To install via `pip` use:
+# Installation:
+To install via pip use:
 ```sh
-pip install taisim #Python2.x
-pip3 install taisim #Python3.x
+pip install taisim2 #Python2.x
+pip3 install taisim2 #Python3.x
 ```
-## Basic Usage
-The usage of the package is very easy. It does not require any initialisation. Just import and start coding:
+# Basic Usage Single-Robot example
+Robot Initialization
+```pyhton
+example_robot=Robot(tag="helloOpenCV")
+```
+## Sensor Atachment
+```pyhon
+example_camera=Camera(robot=example_robot,tag="car camera",pos_x=0,pos_y=1)
+
+example_gps=GPS(robot=example_robot,tag="t1 GPS")
+
+example_compass=COMPASS(example_robot,"my compass")
+```
+## Sensor read
 ```python
-from taisim.simulator import Simulator
-from taisim.sensor import Camera,Lidar,Compass,Gps
-import taisim.external_data as ex
+#inside a loop
 
-#Simulator.hide_simulator_window()  #hide pygame window if you want
-Simulator.track(ex.LEVEL1)   #select maps ranging from LEVEL1 to LEVEL 7 or input path
-CAM=Camera(title="Front camera",angle=0).  #initialize virtual camera
-LIDAR=Lidar(title="Lidar",angle=0,angular_resolution=100) #initialize virtual lidar
-COMPASS=Compass(title="compass") #initialize virtual compass
-GPS=Gps(title="GPS").  #initialize virtual GPS
-while Simulator.isRunning :
-    frame=CAM.read() #extract camera frame
-    distance,angles=LIDAR.read() #extract lidar measurement
-    angle=COMPASS.read() #extract compass measurement
-    x,y=GPS.read()  #extract gps measurement
-    ## movement
-    Simulator.control(linear_vel=1,angular_vel=5)
-    # liniar_vel and angular_Vel between [-5;5] 
-    # linear_vel logic: 0=stop , more=forward , less=backward 
-    # angular_vel logic: 0= forward , more=left, less=right
-    
-    """ your code here"""
-    Simulator.display() #display control panel
+frame=example_camera.read() $only color
+frame,depth_frame=example_camera.read(depth=True) color and depth frame
+x,y,z=example_gps.read()# localization
+angle=example.compass.read()# orientation
 ```
+## Robot movement
+```python
+example_robot.move(linear_velocity=0.1,angular_velocity0.1,altitude0.1)
+```
+# Lets jump to the Multi-Robot&Sensor part
+The usage of the package is very easy and it was designed so if you know OpenCV, you are comfortable working with TAISIM2.
 
+Every robot has a tag, initial position, initial rotation and size.
+```python
 
+example_robot=Robot(tag="helloOpenCV",x=0,y=-10,z=0,size=0.3,rotation=0)
 
-![base_logo_transparent_background](/assets/Untitled%20Project.gif)
+tank1=Robot(tag="Tornado",size=0.2)
 
-## Simulator Examples
-TAISIM is suitable for a range of computer vision applications, including but not limited to:
+car=Robot(tag="LineFollower",x=-5,size=0.2)
 
-   * Lane Keeping: 
-     Test and develop algorithms for keeping a vehicle within the boundaries of a lane.
-   * Line Following:
-     Test and develop the simplest algorithm for following a line.
-   * Maze Running: 
+drone=Robot(tag="EAGLE BOT",x=3)
+```
+## Sensor Initialization
+Every sensor is position is relative to its robot position.
+```python3
+#each sensor is customisable and gets atached to a robot
+#initialize camera
+camera1=Camera(tank1,tag="birdy",)
+camera2=Camera(example_robot,tag="FPV",frame_width=600,frame_height=600)
+camera3=Camera(car,tag="car camera",pos_x=0,pos_y=1)
+
+#initialize gps
+gps=GPS(tank1,tag="t1 GPS")
+gps1=GPS(drone,tag="drone GPS")
+gps2=GPS(example_robot,tag="GPS")
+
+#initialize compass
+compass1=COMPASS(drone,tag="compass")
+compass1=COMPASS(tank1,tag="imu")
+Simulation Architecture
+```
+Based on the initialization the simulator would generate at the beginning of the program a simulation architecture.
+
+The architecture hierarchy will be displayed in the terminal (for our example it will look like this):
+
+This architecture will display all robots with all sensors and their tags in order to distinguish them properly
+
+## Render the Simulator Enviournment
+```python3
+while Simulator.isRunning():
+      Simulator.render()
+```
+It will create a window that will display our track , robots and tags.
+
+## EXAMPLE CODE
+For the example above this is how the code looks like:
+```python
+from taisim2.simulator import Simulator,Robot,InputHandler
+from taisim2.virtual_sensors import Camera,GPS,COMPASS
+import cv2
+  
+def main():
+    
+    #initialize robots
+    example_robot=Robot(tag="helloOpenCV",x=0,y=-10,z=0,size=0.3,rotation=0)    
+    tank1=Robot(tag="Tornado",size=0.2)
+    car=Robot(tag="LineFollower",x=-5,size=0.2)
+    drone=Robot(tag="EAGLE BOT",x=3)
+
+    #initialize cameras
+    camera1=Camera(tank1,tag="birdy",)
+    camera2=Camera(example_robot,tag="FPV",frame_width=600,frame_height=600)
+    camera3=Camera(car,tag="car camera",pos_x=0,pos_y=1)
+    
+    #initialize gps
+    gps=GPS(tank1,"t1 GPS")
+    gps1=GPS(drone,"drone GPS")
+    gps2=GPS(example_robot,"GPS")
+
+    #initialize compass
+    compass1=COMPASS(drone,"compass")
+    compass1=COMPASS(tank1,"imu")
+    
+    #Set the track
+    Simulator.track('taisim2/logo.png')
+
+    while Simulator.isRunning():  #check if the simulator is still running
+        world=Simulator.render()   # Render
+        example_robot.move(1,1,0)   
+if __name__ == '__main__':
+    main()
+#-----------------------------------------------------------------------------
+```
+# Simulator Examples
+TAISIM2 is suitable for a range of computer vision applications, including but not limited to:
+
+Lane Keeping: Test and develop algorithms for keeping a vehicle within the boundaries of a lane.
+Line Following: Test and develop the simplest algorithm for following a line.
+Maze Running: Develop and evaluate navigation algorithms capable of finding a path through complex environments.
+Agricultural Crop Following: Ideal for tasks like crop identification, health monitoring, or autonomous navigation between crop rows.
+Future Development Plans
+the Python version of the simulator will serve as a POC soo what I want to do Is migrate the code to C , build it as a shared library (.dll , .so) and making it available to C,C++,Python, Java Users
