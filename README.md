@@ -130,38 +130,45 @@ It will create a window that will display our track , robots and tags.
 ## EXAMPLE CODE
 For the example above this is how the code looks like:
 ```python
-from taisim2.simulator import Simulator,Robot,InputHandler
-from taisim2.virtual_sensors import Camera,GPS,COMPASS
+rom taisim2.simulator import Simulator,Robot,LEVEL1
+from taisim2.sensors import Camera,GPS,COMPASS
 import cv2
-  
+# Window dimensions
 def main():
     
     #initialize robots
-    example_robot=Robot(tag="helloOpenCV",x=0,y=-10,z=0,size=0.3,rotation=0)    
-    tank1=Robot(tag="Tornado",size=0.2)
-    car=Robot(tag="LineFollower",x=-5,size=0.2)
-    drone=Robot(tag="EAGLE BOT",x=3)
-
+    example_robot=Robot(tag="helloOpenCV",x=0,y=-10,z=-0,size=0.3,rotation=0)    
+    little_tank=Robot(tag="TANK",y=5)
+    drone=Robot(tag="drone", z=5,x=0.2)
     #initialize cameras
-    camera1=Camera(tank1,tag="birdy",)
-    camera2=Camera(example_robot,tag="FPV",frame_width=600,frame_height=600)
-    camera3=Camera(car,tag="car camera",pos_x=0,pos_y=1)
     
-    #initialize gps
-    gps=GPS(tank1,"t1 GPS")
-    gps1=GPS(drone,"drone GPS")
-    gps2=GPS(example_robot,"GPS")
-
-    #initialize compass
-    compass1=COMPASS(drone,"compass")
-    compass1=COMPASS(tank1,"imu")
-    
+    camera1=Camera(robot=example_robot, tag="Example Camera",near_clip=0.1,far_clip=100)
+    camera2=Camera(robot=little_tank, tag="Left Camera",pos_x=0,pos_y=0,pos_z=0.1,rotationXY=90,fov=60,frame_width=640,frame_height=480)
+    drone_camera=Camera(robot=drone,tag="BirdEyeView",pos_z=-0.2,rotationZX=90,far_clip=300)
+    gps=GPS(robot=example_robot,tag="example_gps")
+    compass=COMPASS(robot=example_robot, tag="example COMPASS")
+   
     #Set the track
-    Simulator.track('taisim2/logo.png')
+    #Simulator.track(LEVEL1)
+    Simulator.track("logo.jpg")
 
     while Simulator.isRunning():  #check if the simulator is still running
-        world=Simulator.render()   # Render
-        example_robot.move(1,1,0)   
+        Simulator.render()   # Render
+        frame=camera1.read() #if we don't have depth=True , we return only the color frame
+        drone_frame=drone_camera.read()
+        color_frame, depth_frame =camera2.read(depth=True) #with depth=True we return the color and depth frame
+        depth_colormap = cv2.applyColorMap(cv2.convertScaleAbs(depth_frame, alpha=255), cv2.COLORMAP_JET)
+
+        x,y,z =gps.read()
+        angle =compass.read()
+
+        drone.move(linear_velocity=0,angular_velocity=-0.5,altitude=5)
+
+        cv2.imshow("frontal_camera",frame)
+        cv2.imshow("left_frame",color_frame)
+        cv2.imshow("depth_frame",depth_colormap)
+        cv2.imshow("drone_view",drone_frame)
+          
 if __name__ == '__main__':
     main()
 #-----------------------------------------------------------------------------
