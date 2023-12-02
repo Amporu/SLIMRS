@@ -130,7 +130,7 @@ It will create a window that will display our track , robots and tags.
 ## EXAMPLE CODE
 For the example above this is how the code looks like:
 ```python
-rom taisim2.simulator import Simulator,Robot,LEVEL1
+from taisim2.simulator import Simulator,Robot,LEVEL1
 from taisim2.sensors import Camera,GPS,COMPASS
 import cv2
 # Window dimensions
