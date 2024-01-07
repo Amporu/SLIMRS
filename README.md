@@ -117,6 +117,7 @@ Simulation Architecture
 Based on the initialization the simulator would generate at the beginning of the program a simulation architecture.
 
 The architecture hierarchy will be displayed in the terminal (for our example it will look like this):
+![base_logo_transparent_background](/src/taisim2/data/image_ZcpQdgVtWc.png.webp)
 
 This architecture will display all robots with all sensors and their tags in order to distinguish them properly
 
@@ -175,6 +176,7 @@ if __name__ == '__main__':
 #-----------------------------------------------------------------------------
 ```
 ![base_logo_transparent_background](/src/taisim2/data/image_ZcpQdgVtWc.png.webp)
+
 # Simulator Examples
 TAISIM2 is suitable for a range of computer vision applications, including but not limited to:
 
