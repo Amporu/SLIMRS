@@ -69,9 +69,7 @@ example_gps=GPS(robot=example_robot,tag="t1 GPS")
 example_compass=COMPASS(example_robot,"my compass")
 ```
 ## Sensor read
-for ```python frame,depth_frame=example_camera.read(depth=True)```
-we get both the color and the depth frame 
-![base_logo_transparent_background](/src/taisim2/data/image_ZcpQdgVtWc.png.webp)
+
 
 ```python
 #inside a loop
@@ -80,6 +78,11 @@ frame,depth_frame=example_camera.read(depth=True) color and depth frame
 x,y,z=example_gps.read()# localization
 angle=example.compass.read()# orientation
 ```
+ATENTION!!!
+when depth=True 
+```python frame,depth_frame=example_camera.read(depth=True)```
+we get both the color and the depth frame 
+![base_logo_transparent_background](/src/taisim2/data/image_JNsoaNVNyE.png.webp)
 ## Robot movement
 ```python
 example_robot.move(linear_velocity=0.1,angular_velocity0.1,altitude0.1)
