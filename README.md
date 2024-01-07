@@ -174,7 +174,7 @@ if __name__ == '__main__':
 
 #-----------------------------------------------------------------------------
 ```
-![base_logo_transparent_background](/src/taisim2/data/logo.jpg)
+![base_logo_transparent_background](/src/taisim2/data/image_ZcpQdgVtWc.png.webp)
 # Simulator Examples
 TAISIM2 is suitable for a range of computer vision applications, including but not limited to:
 
