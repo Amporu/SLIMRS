@@ -34,7 +34,9 @@ TAISIM is a Python-based simulator designed for testing and developing computer 
 <br/> 
     
 </p>
+
 ## Architecture
+
 ![base_logo_transparent_background](/src/taisim2/data/classes_s84mxYm3jT.png)
 ![base_logo_transparent_background](/src/taisim2/data/packages_rIfYiGojz3.png)
 
